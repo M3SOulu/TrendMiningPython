@@ -1,1 +1,5 @@
-# Trend Mining
+# TrendMining
+
+TrendMining project
+
+## Setup
