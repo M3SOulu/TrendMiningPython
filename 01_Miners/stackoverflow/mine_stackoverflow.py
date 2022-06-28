@@ -46,7 +46,7 @@ def fetch_data(query, filter, page_number):
 
 
 def getBody(stk_query_string):
-    spinner = MoonSpinner('Mining in progress ')
+    spinner = MoonSpinner('Stackoverflow mining in progress ')
     page_number = 1 
     df = fetch_data(stk_query_string, withbody_filter, page_number)
 
