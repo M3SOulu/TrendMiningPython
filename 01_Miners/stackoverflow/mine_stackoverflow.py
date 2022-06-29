@@ -128,7 +128,6 @@ def cleanData():
     stack_data.to_csv('../Data/stackoverflow_data.csv')
     spinner.finish()
     print('Data cleaned and saved')
-
     return
 
 def mine_stackoverflow_data(searchKeyword):
