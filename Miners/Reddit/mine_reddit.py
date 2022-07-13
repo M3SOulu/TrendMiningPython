@@ -5,37 +5,19 @@ import pandas as pd
 from datetime import datetime   
 from dotenv import load_dotenv
 from progress.spinner import MoonSpinner, PieSpinner
+from Utils.create_file import createFile
+from typing import List,  Dict,  Optional
 
  
 
 load_dotenv() 
 
 
-reddit_client_id =  os.getenv('REDDIT_CLIENT_ID') 
-reddit_client_secret = os.getenv('REDDIT_CLIENT_SECRET') 
-reddit_user_agent = os.getenv('REDDIT_USER_AGENT') 
+reddit_client_id: Optional[str]  =  os.getenv('REDDIT_CLIENT_ID') 
+reddit_client_secret: Optional[str] = os.getenv('REDDIT_CLIENT_SECRET') 
+reddit_user_agent: Optional[str] = os.getenv('REDDIT_USER_AGENT') 
 
-def createFile(file, path):
-    """This function is used to create the directory necessary to store the mined data.        
 
-    Args:
-        file (str): Name of the file to be created.
-        path (str): Path of the directory where the files will be stored e.g. "../../Data".
-    """
-    does_folder_exist = os.path.exists(path)
-    does_file_exist  = os.path.exists(path + '/' + file)
-    if (does_folder_exist): 
-        # Remove existing stack data file if already exist to add new one
-        if (does_file_exist):
-            print('Removing already existing',file,'file')
-            os.remove(path + '/' + file)
-        else:
-            print( file + ' does not exist yet, ' + 'it will be downloaded')
-
-    # Create Data folder if did not exist to store the csv file
-    else: 
-        os.mkdir('../Data')
-        print('Data folder created for csv file storage')
 
 def clean_data(data):
     """This function is applied to the dataframe, it removes the unnecessary characters  and symbols from it

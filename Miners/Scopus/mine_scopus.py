@@ -4,8 +4,10 @@ import pandas as pd
 import pybliometrics 
 from datetime import datetime   
 from dotenv import load_dotenv
+from Utils.create_file import createFile
 from pybliometrics.scopus import ScopusSearch
 from pybliometrics.scopus.utils import config 
+
 from progress.spinner import MoonSpinner, PieSpinner
 
 
@@ -13,24 +15,16 @@ load_dotenv()
 
 scopus_api_key =  os.getenv('SCOPUS_API_KEY')
  
-
-def createFile(file, path = '../Data'):
-    does_folder_exist = os.path.exists(path)
-    does_file_exist  = os.path.exists(path + '/' + file)
-    if (does_folder_exist): 
-        # Remove existing stack data file if already exist to add new one
-        if (does_file_exist):
-            print('Removing already existing',file,'file')
-            os.remove(path + '/' + file)
-        else:
-            print( file + ' does not exist yet, ' + 'it will be downloaded')
-
-    # Create Data folder if did not exist to store the csv file
-    else: 
-        os.mkdir('../Data')
-        print('Data folder created for csv file storage')
-
+ 
 def clean_scopus_data(data):
+    """This function is applied to the dataframe, it removes the unnecessary characters  and symbols from it
+
+    Args:
+        data (string): Data string that needs to be cleaned
+
+    Returns:
+        str: Cleaned string 
+    """
     data = str(data)
     res = re.sub("[©®™%]", "", data) #remove ©,®,™,% sign 
     res = re.sub("<a.*?>*</a>", '', data) #remove anchor tags with content
@@ -47,6 +41,11 @@ def clean_scopus_data(data):
 
 
 def getData(query):
+    """This function mines the Scopus database
+
+    Args:
+        query (str): query or string that will be used as a criteria while mining
+    """
     spinner = MoonSpinner('Scopus mining in progress ')
     scopus_query = query
     scopus_res = ScopusSearch(scopus_query,  download=True, view='COMPLETE')
@@ -67,6 +66,10 @@ def getData(query):
  
 
 def clean():
+    """
+    This function cleans the dataframes by applying the clean_scopus_data function to each abstract in the dataframe
+        Also it renames few important column names  
+    """
     spinner = PieSpinner('Cleaning Data ')
     scopus_data_subset = pd.read_csv('../Data/scopus_data.csv')
     abstract = scopus_data_subset['description']
@@ -82,6 +85,11 @@ def clean():
 
 
 def mine_scopus_data(query):
+    """High level function used to call all functions needed to mine, clean and save scopus data
+
+    Args:
+        query (str): query or string that will be used as a criteria while mining
+    """
     createFile('scopus_data.csv', '../Data')
     print("Enter this key when prompted to enter key:", scopus_api_key)
     pybliometrics.scopus.utils.create_config()
