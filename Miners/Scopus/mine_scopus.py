@@ -7,16 +7,16 @@ from dotenv import load_dotenv
 from Utils.create_file import createFile
 from pybliometrics.scopus import ScopusSearch
 from pybliometrics.scopus.utils import config 
-
+from typing import List,  Dict,  Optional
 from progress.spinner import MoonSpinner, PieSpinner
 
 
 load_dotenv()
 
-scopus_api_key =  os.getenv('SCOPUS_API_KEY')
+scopus_api_key: Optional[str] =  os.getenv('SCOPUS_API_KEY')
  
  
-def clean_scopus_data(data):
+def clean_scopus_data(data: str) ->  str:
     """This function is applied to the dataframe, it removes the unnecessary characters  and symbols from it
 
     Args:
@@ -40,7 +40,7 @@ def clean_scopus_data(data):
     return res
 
 
-def getData(query):
+def getData(query: str) -> None:
     """This function mines the Scopus database
 
     Args:
@@ -65,7 +65,7 @@ def getData(query):
      
  
 
-def clean():
+def clean() -> None:
     """
     This function cleans the dataframes by applying the clean_scopus_data function to each abstract in the dataframe
         Also it renames few important column names  
@@ -73,9 +73,15 @@ def clean():
     spinner = PieSpinner('Cleaning Data ')
     scopus_data_subset = pd.read_csv('../Data/scopus_data.csv')
     abstract = scopus_data_subset['description']
+    title = scopus_data_subset['title']
     cleaned_abstract = abstract.apply(clean_scopus_data)
+    cleaned_title = title.apply(clean_scopus_data)
     scopus_data_subset['Abstract_clean'] = cleaned_abstract 
+    scopus_data_subset['Title_clean'] = cleaned_title
+    scopus_data_subset.dropna(axis=0, inplace=True)
     scopus_data_subset.rename(columns={'description':'Abstract', 'coverDate': 'Date', 'citedby_count': 'Cites', 'title': 'Title'}, inplace=True)
+    print("Old file will be replaced\n")
+    createFile('scopus_data.csv', '../Data')
     scopus_data_subset.to_csv('../Data/scopus_data.csv')
     spinner.finish()
     print('Data cleaned and saved')
@@ -84,7 +90,7 @@ def clean():
      
 
 
-def mine_scopus_data(query):
+def mine_scopus_data(query) -> None:
     """High level function used to call all functions needed to mine, clean and save scopus data
 
     Args:

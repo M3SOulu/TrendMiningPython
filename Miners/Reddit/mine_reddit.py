@@ -1,5 +1,6 @@
 import re
 import os
+from turtle import pos
 import praw  
 import pandas as pd
 from datetime import datetime   
@@ -19,7 +20,7 @@ reddit_user_agent: Optional[str] = os.getenv('REDDIT_USER_AGENT')
 
 
 
-def clean_data(data):
+def clean_data(data: str) -> str:
     """This function is applied to the dataframe, it removes the unnecessary characters  and symbols from it
 
     Args:
@@ -28,31 +29,30 @@ def clean_data(data):
     Returns:
         str: Cleaned string 
     """
-    data = str(data)  
-    res = re.sub('\[[^]]*\]' , '', data) #remove eveything in []
-    res = re.sub("<a.*?>*</a>" , '', data) #remove anchor tags with content
-    res = re.sub("[0-9]" , '', res) #remove numbers
-    res = re.sub("&quot", '', res) #remove &quot
-    res = re.sub("<.*?>", '', res) #remove all HTML tags
-    res = re.sub("//.*\n", '', res)
-    res = re.sub("\\{\n.*\\}\n", '', res)
-    res = re.sub("[\r\n]", '', res)
-    res = re.sub("\"", '', res) #remove quotes
-    res = re.sub('[^\w\s]', ' ', res) #remove punctuations
-    res = res.lower()
+    data: str = str(data)  
+    res: str = re.sub('\[[^]]*\]' , '', data) #remove eveything in []
+    res: str = re.sub("<a.*?>*</a>" , '', data) #remove anchor tags with content
+    res: str = re.sub("[0-9]" , '', res) #remove numbers
+    res: str = re.sub("&quot", '', res) #remove &quot
+    res: str = re.sub("<.*?>", '', res) #remove all HTML tags
+    res: str = re.sub("//.*\n", '', res)
+    res: str = re.sub("\\{\n.*\\}\n", '', res)
+    res: str = re.sub("[\r\n]", '', res)
+    res: str = re.sub("\"", '', res) #remove quotes
+    res: str = re.sub('[^\w\s]', ' ', res) #remove punctuations
+    res: str = res.lower()
     return res
 
-def getData(subreddit):
+def getData(subreddit: str) -> None:
     """This function mines the data from subreddits
 
     Args:
         subreddit (str): Name of the subreddit to be mined
     """
-    reddit = praw.Reddit(client_id=reddit_client_id,client_secret=reddit_client_secret,user_agent=reddit_user_agent,check_for_async=False)
-    subreddit = reddit.subreddit(subreddit) 
+    reddit: praw.reddit.Reddit = praw.Reddit(client_id=reddit_client_id,client_secret=reddit_client_secret,user_agent=reddit_user_agent,check_for_async=False)
+    subreddit: praw.models.reddit.subreddit.Subreddit = reddit.subreddit(subreddit) 
     print('Subreddit:', subreddit)
-
-    posts = []
+    posts= []
     columns=['AuthorId', 'Q_id', 'Title', 'Abstract', 'Answers', 'Cites',  'Date']
 
     spinner = MoonSpinner('Reddit mining in progress ')
@@ -64,11 +64,12 @@ def getData(subreddit):
                   ])
 
     spinner.finish()
-    reddit_data = pd.DataFrame(posts,columns=columns )
+    reddit_data: pandas.core.frame.DataFrame = pd.DataFrame(posts,columns=columns )
+
     reddit_data.to_csv('../Data/reddit_data.csv')
     print('Data saved')
 
-def clean_reddit_data():
+def clean_reddit_data() -> None:
     """This function cleans the dataframes by applying the clean_data function to each title and abstract in the dataframe
         Also it drops the row if it has no date and if its abstract is missing
     """
@@ -87,12 +88,15 @@ def clean_reddit_data():
                            (reddit_data['Date'] == 0) ].index, 
                            inplace=True
                             )
+    # Drop null rows
+    reddit_data.dropna(axis=0, inplace=True)
+    print("Old file will be replaced\n")
     createFile('reddit_data.csv', '../Data')
     reddit_data.to_csv('../Data/reddit_data.csv')
     spinner.finish()
     print('Data cleaned and saved')
 
-def mine_reddit_data(subreddit):
+def mine_reddit_data(subreddit) ->  None:
     """High level function used to call all functions needed to mine, clean and save reddit data
 
     Args:

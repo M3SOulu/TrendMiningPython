@@ -5,17 +5,18 @@ import pandas as pd
 from datetime import datetime   
 from dotenv import load_dotenv
 from Utils.create_file import createFile
+from typing import List,  Dict,  Optional
 from progress.spinner import MoonSpinner, PixelSpinner, PieSpinner
 
 
 load_dotenv()
 
-stackoverflow_api_key =  os.getenv('STACKOVERFLOW_API_KEY')
-total_filter = 'total'
-withbody_filter = 'withbody'
+stackoverflow_api_key:  Optional[str]=  os.getenv('STACKOVERFLOW_API_KEY')
+total_filter: Optional[str] = 'total'
+withbody_filter: Optional[str] = 'withbody'
 
 
-def getTotal(stk_query_string):
+def getTotal(stk_query_string: str) -> None:
     """This function gets the total number of results in response
 
     Args:
@@ -28,7 +29,7 @@ def getTotal(stk_query_string):
     print('total:', total_num)
     
 
-def fetch_data(query, filter, page_number):
+def fetch_data(query: str, filter: str, page_number: int):
     """This function is used to fetch data.
 
     Args:
@@ -45,7 +46,7 @@ def fetch_data(query, filter, page_number):
     return pd.DataFrame(res)
 
 
-def getBody(stk_query_string):
+def getBody(stk_query_string: str) -> None:
     """This function mines Stackoverflow.
 
     Args:
@@ -95,7 +96,7 @@ def getBody(stk_query_string):
      
 
 
-def clean(data, is_abstract):
+def clean(data: str, is_abstract: bool) -> str:
     """This function is applied to the dataframe, it removes the unnecessary characters  and symbols from it.
 
     Args:
@@ -126,29 +127,36 @@ def clean(data, is_abstract):
 
     return res
 
-def cleanData():
+def cleanData() -> None:
     """
     This function cleans the dataframes by applying the clean function to each abstract in the dataframe. 
     In this function data points has been droped where abstract and date is missing 
     """
     spinner = PieSpinner('Cleaning Data ')
     stack_data = pd.read_csv('../Data/stackoverflow_data.csv')
+    spinner.next()
     abstract = stack_data.Abstract
+    title = stack_data.Title
     cleaned_abstract = abstract.apply(clean, is_abstract=True)
+    cleaned_title = title.apply(clean, is_abstract=False)
     stack_data['Abstract_clean'] = cleaned_abstract
-
+    stack_data['Title_clean'] = cleaned_title
     #Drop rows where abstract has empty value
     stack_data.drop(stack_data[stack_data['Abstract'] == ''].index, inplace=True)
 
     #Drop rows with no date
     stack_data.drop(stack_data[(stack_data['Date'] == '') | (stack_data['Date'] == None) | (stack_data['Date'] == 0) ].index, inplace=True)
+    # Drop null rows
+    print("wewe")
+    stack_data['Abstract_clean'].dropna(axis=0, inplace=True, how="any")
+    print("Old file will be replaced\n")
     createFile('stackoverflow_data.csv', '../Data')
     stack_data.to_csv('../Data/stackoverflow_data.csv')
     spinner.finish()
     print('Data cleaned and saved')
      
 
-def mine_stackoverflow_data(searchKeyword):
+def mine_stackoverflow_data(searchKeyword:str) -> None:
     """High level function used to call all functions needed to mine, clean and save stackoverflow data
 
     Args:
