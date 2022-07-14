@@ -5,6 +5,7 @@ reddit_data = pd.read_csv('../../Data/reddit_data.csv')
 
 def reddit_DTM():
     reddit_data_DTM = DTM(reddit_data)
+    reddit_data_DTM.createOutputDir("Reddit")
     reddit_data_DTM.remove_stop_words(["new", "custom", "words", "add","to","list", "d"])
     reddit_data_DTM.combine_title_and_abs()
     reddit_data_DTM.stemming()

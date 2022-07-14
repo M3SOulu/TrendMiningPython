@@ -1,4 +1,5 @@
 import nltk
+import os
 import pandas as pd
 import seaborn as sns
 import matplotlib.pyplot as plt
@@ -6,6 +7,7 @@ from nltk.corpus import stopwords
 from nltk.stem import PorterStemmer
 import scipy.cluster.hierarchy as sch
 from scipy.spatial.distance import pdist 
+from Utils.create_file import createFile
 from sklearn.feature_extraction.text import CountVectorizer
 
 
@@ -21,7 +23,21 @@ class DTM():
     self.frequent_words = pd.DataFrame()
     self.sorted_frequent_words = pd.DataFrame()
     self.top_words = pd.DataFrame()
+    self.dirName = ""
+    
     print(f'Data has {len(data_frame)} rows')
+
+
+  def createOutputDir(self, dirName):
+    self.dirName = dirName
+    does_folder_exist = os.path.exists(f'../Output/{dirName}')
+    if (does_folder_exist):
+      print("Output directory already exists.")        
+      # Create Data folder if did not exist to store the csv file
+    else:
+      os.mkdir(f'../Output/{dirName}')
+      print('Folder created for output storage')
+
 
   def get_data(self):
     return self.data_frame
@@ -98,6 +114,7 @@ class DTM():
   def visualize_frequent_words(self):
     plt.rcParams["figure.figsize"] = 20,40
     sns.barplot(x="frequency", y="word", data=self.top_words)
+    plt.savefig(os.path.join("../Output/" + self.dirName, "reddit_frequent_terms.png"))
  
   def dendogram_clusting(self):
     distance_matrix = pdist(self.vec_df, metric='euclidean')
@@ -108,4 +125,5 @@ class DTM():
                             labels=self.data_frame['Title_without_stopwords'].tolist(),
                             leaf_font_size=9
                             )
-    plt.show() 
+    plt.savefig(os.path.join("../Output/" + self.dirName, "reddit_dendogram.png"))
+   

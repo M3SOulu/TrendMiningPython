@@ -7,6 +7,7 @@ print(stackoverflow_data.isna().sum())
 
 def stackoverflow_DTM():
     stackoverflow_data_DTM = DTM(stackoverflow_data)
+    stackoverflow_data_DTM.createOutputDir("Stackoverflow")
     stackoverflow_data_DTM.remove_stop_words(["new", "custom", "words", "add","to","list", "d"])
     stackoverflow_data_DTM.combine_title_and_abs()
     stackoverflow_data_DTM.stemming()

@@ -5,6 +5,7 @@ scopus_data = pd.read_csv('../../Data/scopus_data.csv')
 
 def scopus_DTM():
     scopus_data_DTM = DTM(scopus_data)
+    scopus_data_DTM.createOutputDir("Scopus")
     scopus_data_DTM.remove_stop_words(["new", "custom", "words", "add","to","list", "d"])
     scopus_data_DTM.combine_title_and_abs()
     scopus_data_DTM.stemming()
