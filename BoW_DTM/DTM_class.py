@@ -42,7 +42,7 @@ class DTM():
     if (does_folder_exist):
       print("Output directory already exists.")         
     else:
-      os.mkdir(f'../Output/{dirName}')
+      os.makedirs(f'../Output/{dirName}')
       print('Folder created for output storage')
 
   def saveFile(self, file, path):
@@ -201,7 +201,7 @@ class DTM():
     """
     plt.rcParams["figure.figsize"] = 20,40
     sns.barplot(x="frequency", y="word", data=self.top_words)
-    plt.savefig(os.path.join("../Output/" + self.dirName, "reddit_frequent_terms.png"))
+    plt.savefig(os.path.join("../Output/" + self.dirName, f"{self.dirName}_frequent_terms.png"))
  
   def dendogram_clusting(self):
     """Generates and saves dendogram to an image
@@ -214,5 +214,5 @@ class DTM():
                             labels=self.data_frame['Title_without_stopwords'].tolist(),
                             leaf_font_size=9
                             )
-    plt.savefig(os.path.join("../Output/" + self.dirName, "reddit_dendogram.png"))
+    plt.savefig(os.path.join("../Output/" + self.dirName, f"{self.dirName}_dendogram.png"))
    

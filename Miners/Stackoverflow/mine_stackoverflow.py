@@ -26,7 +26,7 @@ def getTotal(stk_query_string: str) -> None:
     res =  requests.get(total_api_url)
     res = res.json()
     total_num = res['total']
-    print('total:', total_num)
+    # print('total:', total_num)
     
 
 def fetch_data(query: str, filter: str, page_number: int):
@@ -143,12 +143,13 @@ def cleanData() -> None:
     stack_data['Title_clean'] = cleaned_title
     #Drop rows where abstract has empty value
     stack_data.drop(stack_data[stack_data['Abstract'] == ''].index, inplace=True)
+    stack_data.drop(stack_data[stack_data['Abstract_clean'] == ''].index, inplace=True)
 
     #Drop rows with no date
     stack_data.drop(stack_data[(stack_data['Date'] == '') | (stack_data['Date'] == None) | (stack_data['Date'] == 0) ].index, inplace=True)
     # Drop null rows
     print("wewe")
-    stack_data['Abstract_clean'].dropna(axis=0, inplace=True, how="any")
+    stack_data.dropna(axis=0, inplace=True, how="any")
     print("Old file will be replaced\n")
     createFile('stackoverflow_data.csv', '../Data')
     stack_data.to_csv('../Data/stackoverflow_data.csv')

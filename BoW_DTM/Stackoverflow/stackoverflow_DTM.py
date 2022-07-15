@@ -1,9 +1,14 @@
 import pandas as pd
 from BoW_DTM.DTM_class import DTM
 
-stackoverflow_data = pd.read_csv('../../Data/stackoverflow_data.csv')
-
-print(stackoverflow_data.isna().sum())
+try:
+    stackoverflow_data = pd.read_csv('../../Data/stackoverflow_data.csv')
+except FileNotFoundError:
+    print("FileNotFoundError: File not found. Please make sure you have mined the data first")
+except NameError:
+    print( "NameError: File not found. Please make sure you have mined the data first")
+except Exception as e:
+    print("Something went wrong with file reading", e)
 
 def stackoverflow_DTM():
     stackoverflow_data_DTM = DTM(stackoverflow_data)

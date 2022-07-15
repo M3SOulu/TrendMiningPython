@@ -1,7 +1,15 @@
 import pandas as pd
 from BoW_DTM.DTM_class import DTM
 
-scopus_data = pd.read_csv('../../Data/scopus_data.csv')
+
+try:
+    scopus_data = pd.read_csv('../../Data/scopus_data.csv')
+except FileNotFoundError:
+    print("FileNotFoundError: File not found. Please make sure you have mined the data first")
+except NameError:
+    print("NameError: File not found. Please make sure you have mined the data first")
+except Exception as e:
+    print("Something went wrong with file reading", e)
 
 def scopus_DTM():
     scopus_data_DTM = DTM(scopus_data)

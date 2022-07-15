@@ -1,7 +1,15 @@
 import pandas as pd
 from BoW_DTM.DTM_class import DTM
 
-reddit_data = pd.read_csv('../../Data/reddit_data.csv')
+
+try:
+    reddit_data = pd.read_csv('../../Data/reddit_data.csv')
+except FileNotFoundError:
+    print("FileNotFoundError: File not found. Please make sure you have mined the data first")
+except NameError:
+    print("NameError: File not found. Please make sure you have mined the data first")
+except Exception as e:
+    print("Something went wrong with file reading", e)
 
 def reddit_DTM():
     reddit_data_DTM = DTM(reddit_data)
