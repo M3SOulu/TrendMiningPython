@@ -23,3 +23,10 @@ Trend Mining project
 - Pass the search parameters to the mining functions.
 - Run the file by `python miner.py`.
 - The mined and cleaned data will be, by default, saved to `Data` folder.
+
+## Document-Term Matrix & Dendogram clustring
+
+- Navigate into `Bow_DTM` directory
+- Navigate into individual directories and run the files
+- The graphs/images will be saved to Output folder and other information will be printed into console.
+- Explore other methods in `DTM_class.py` file
