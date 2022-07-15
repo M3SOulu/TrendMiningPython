@@ -18,6 +18,7 @@ def scopus_DTM():
     scopus_data_DTM.print_top_words(3)
     scopus_data_DTM.visualize_frequent_words()
     scopus_data_DTM.dendogram_clusting()
+    scopus_data_DTM.saveFile('scopus_data.csv', '../../Data')
 
 
 scopus_DTM()

@@ -2,3 +2,4 @@
 .vscode
 ./Data
 **/.mypy_cache/
+**/Output/

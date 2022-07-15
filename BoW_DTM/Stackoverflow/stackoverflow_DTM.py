@@ -20,6 +20,7 @@ def stackoverflow_DTM():
     stackoverflow_data_DTM.print_top_words(3)
     stackoverflow_data_DTM.visualize_frequent_words()
     stackoverflow_data_DTM.dendogram_clusting()
+    stackoverflow_data_DTM.saveFile('stackoverflow_data.csv', '../../Data')
 
 
 stackoverflow_DTM()

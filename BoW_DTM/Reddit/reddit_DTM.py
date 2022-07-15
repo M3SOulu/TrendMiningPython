@@ -18,6 +18,6 @@ def reddit_DTM():
     reddit_data_DTM.print_top_words(3)
     reddit_data_DTM.visualize_frequent_words()
     reddit_data_DTM.dendogram_clusting()
-
+    reddit_data_DTM.saveFile('reddit_data.csv', '../../Data')
 
 reddit_DTM()
