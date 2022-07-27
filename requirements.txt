@@ -12,3 +12,4 @@ mypy-extensions==0.4.3
 scipy==1.8.1
 seaborn==0.11.2
 scikit-learn==1.1.1
+WordCloud==1.8.1

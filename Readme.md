@@ -14,8 +14,9 @@ Trend Mining project
 - Launch the anaconda navigator by using the following command.
   > `anaconda-navigator`
 - Once anaconda-navigator is up choose the newly created `trendMiningEnv` and launch `VS Code` through the anaconda-navogator GUI.
+  > You can get the list of all environments by running `conda info --envs`
 - Install required packages by running the following command in the root of this project.
-  > `pip install requirements.txt`
+  > `pip install -r requirements.txt`
 
 ## Mining data
 
