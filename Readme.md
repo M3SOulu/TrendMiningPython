@@ -2,21 +2,23 @@
 
 Trend Mining project
 
-## Setup
+## Setup Anaconda
 
-- Start by [setting up anaconda](https://www.anaconda.com/products/distribution#windows).
-- Using the following command, create a conda environment named "trendMiningEnv".
-  > `conda create --name trendMiningEnv`
-- Activate the environment by.
-  > `conda activate trendMiningEnv`
-- You can close the environment by the following command.
-  > `conda deactivate`
-- Launch the anaconda navigator by using the following command.
-  > `anaconda-navigator`
-- Once anaconda-navigator is up choose the newly created `trendMiningEnv` and launch `VS Code` through the anaconda-navogator GUI.
-  > You can get the list of all environments by running `conda info --envs`
-- Install required packages by running the following command in the root of this project.
+- Start by [setting up anaconda](https://www.anaconda.com/products/distribution).
+- Open the Anaconda Navigator.
+- Once inside click on `Environments`.
+- Click on the `Create`.
+- Name the environment `trendMiningEnv` or whatever you want, also select packages as `python` with version `3.8` 
+- Once the new environment is created navigate back to `Home` screen in Anaconda Navigator.
+- Make sure you have `VS Code` and `CMD.exe Prompt` installed there. If not click on `Install` otherwise click on `Launch`
+
+## Setup project
+- Clone the repo by running the following command:
+  > `git clone https://github.com/M3SOulu/TrendMiningPython.git`
+- Open the cloned project in `VS Code` and also in the `CMD prompt` that you launced in previous setup
+- Through the `CMD prompt`install required packages by running the following command in the root of this project.
   > `pip install -r requirements.txt`
+- Once done you will be ready to Mine.
 
 ## Mining data
 
@@ -31,3 +33,21 @@ Trend Mining project
 - Navigate into individual directories and run the files
 - The graphs/images will be saved to Output folder and other information will be printed into console.
 - Explore other methods in `DTM_class.py` file
+
+## Word Clouds
+- Navigate to the `Word_clouds` directory
+- Navigate into individual directories and run the files
+- The graphs/images will be saved to Output folder and other information will be printed into console.
+- Explore other methods in `cloud_generator.py` file
+
+## Timeline and Popularity
+- Navigate to the `Timeline_and_popularity` directory
+- Navigate into individual directories and run the files
+- The graphs/images will be saved to Output folder and other information will be printed into console.
+- Explore other methods in `timeline_and_popularity.py` file
+
+## LDA
+- Navigate to the `LDA` directory
+- Navigate into individual directories and run the files
+- The graphs/images will be saved to Output folder and other information will be printed into console.
+- Explore other methods in `LDA.py` file
