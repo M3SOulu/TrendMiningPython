@@ -6,11 +6,18 @@ from scipy.stats import wilcoxon
 import seaborn as sns
 
 class TimelineAndPopularity():
+    """This is the class implementation for timeline and popularity
+    """
     def __init__(self, data_frame):
         self.data_frame = data_frame 
         self.dirName = ""
 
     def createOutputDir(self, dirName):
+        """This function creates output directory for file storage
+
+        Args:
+            dirName (str): Name of the directory you want to create
+        """
         self.dirName = dirName
         does_folder_exist = os.path.exists(f'../Output/{dirName}')
         if (does_folder_exist):
@@ -20,6 +27,8 @@ class TimelineAndPopularity():
         print('Folder created for output storage')  
 
     def popularityByYears(self):
+        """This function calculated the popularity over the years
+        """
         self.data_frame['Date'] = self.data_frame['Date'].apply(lambda x: pd.to_datetime(str(x), format='%Y-%m-%d', yearfirst=True)).dt.date
         years = pd.DatetimeIndex(self.data_frame['Date']).year
         year_count =  Counter(years)
@@ -31,6 +40,8 @@ class TimelineAndPopularity():
         print('Yearly popularity figure saved')
 
     def dailyTrend(self):
+        """This function calculates the daily trend
+        """
         days =  pd.to_datetime(self.data_frame['Date']).dt.date 
         days_count =  Counter(days) 
         sns.lineplot(data=days_count).set(title=f"{self.dirName} daily trend")
@@ -40,6 +51,8 @@ class TimelineAndPopularity():
         print('Daily trend Figure saved')
 
     def citationAnalysis(self):
+        """This function calculates boxplot for the citations 
+        """
         citations = self.data_frame['Cites']
         sns.boxplot(citations, orient='h').set(title=f"{self.dirName} citation boxPlot")
         plt.show()
@@ -47,11 +60,15 @@ class TimelineAndPopularity():
         print('Citation boxplot figure saved')
     
     def citationSummary(self):
+        """This function calculates statistical summary for citations
+        """
         citations = self.data_frame['Cites']
         print('Citation Summary:')
         print(citations.describe())
 
     def citationViolinPlot(self):
+        """This function calculates the violin plot for citations
+        """
         citations = self.data_frame['Cites']
         sns.violinplot(x=citations).set(title=f"{self.dirName} citation violinPlot")
         plt.show()
@@ -59,6 +76,8 @@ class TimelineAndPopularity():
         print('Citation violinplot figure saved')
     
     def plotOldvsNewCitations(self):
+        """This function calculated old and new citations based on median of date
+        """
         mid_date = self.data_frame['Date'].astype('datetime64[ns]').quantile(0.5, interpolation="midpoint")
         new_data = self.data_frame[self.data_frame['Date']>= mid_date]
         old_data = self.data_frame[self.data_frame['Date'] < mid_date]
@@ -92,6 +111,8 @@ class TimelineAndPopularity():
         print(new_data['Cites'].describe())
 
     def titleLengthAnalysis(self):
+        """This function calculates old and new titles based on median of the length of title
+        """
         title_lens = self.data_frame['Title'].str.len()
         median_len = title_lens.median()
         longer_length_data = self.data_frame[self.data_frame['Title'].str.len() >= median_len]
@@ -136,6 +157,8 @@ class TimelineAndPopularity():
         print('W:', w, 'P:', p)
 
     def fourWaySplit(self):
+        """This function splits the title in four parts based on the four quantiles.
+        """
         title_lens = self.data_frame['Title'].str.len()
         q1 = self.data_frame[self.data_frame['Title'].str.len() == title_lens.quantile(0.25, interpolation='midpoint')]
         q2 = self.data_frame[self.data_frame['Title'].str.len() > title_lens.quantile(0.25, interpolation='midpoint')]
@@ -172,6 +195,8 @@ class TimelineAndPopularity():
         print(q4['Cites'].describe())
 
     def getTopArticles(self):
+        """This function calculates top article based on the citation
+        """
         sorted_df = self.data_frame.sort_values(by=['Cites'],ascending=False) 
         combined = pd.DataFrame({'Title':sorted_df['Title_clean'], 'cites':sorted_df['Cites']})
         print('Top 5 articles')
