@@ -3,7 +3,7 @@ from LDA.LDA import LDA
 
 
 try:
-    reddit_data = pd.read_csv('../../Data/reddit_data.csv')
+    reddit_data = pd.read_csv('../../Data/reddit_data.csv', index_col=0)
 except FileNotFoundError:
     print("FileNotFoundError: File not found. Please make sure you have mined the data first")
 except NameError:
@@ -20,3 +20,10 @@ reddit_lda.computeSparsicity()
 reddit_lda.buildLDAModel()
 reddit_lda.visualizeLDAvis()
 reddit_lda.buildImprovisedLDAModel()
+reddit_lda.wordsInTopics()
+reddit_lda.calculateDominantTopic()
+reddit_lda.getTopicDistribution()
+reddit_lda.topKeywordsInEachTopic()
+reddit_lda.printAbstractForTopic(0)
+reddit_lda.topCitedTopics()
+reddit_lda.getTopFive()
