@@ -12,6 +12,8 @@ from sklearn.feature_extraction.text import CountVectorizer, TfidfVectorizer
 
 
 class LDA():
+    """This is the class implementation for calculating LDA
+    """
     def __init__(self, data_frame):
         self.data_frame = data_frame 
         self.dirName = ""
@@ -26,6 +28,11 @@ class LDA():
         self.df_topic_keywords = ""
 
     def createOutputDir(self, dirName):
+        """This function creates output directory for file storage
+
+        Args:
+            dirName (str): Name of the directory you want to create
+        """
         self.dirName = dirName
         does_folder_exist = os.path.exists(f'../Output/{dirName}')
         if (does_folder_exist):
@@ -35,12 +42,19 @@ class LDA():
         print('Folder created for output storage') 
 
     def mergeTokenizedData(self):
+        """This function converts the string representation of tokenized data into list
+        """
         tokenized_rows = []
         for index, row in self.data_frame.iterrows(): 
             tokenized_rows.append(literal_eval(row["Tokenized_data"]))
         self.tokenized = tokenized_rows
     
     def lemmatization(self, allowed_postags=['NOUN', 'ADJ', 'VERB', 'ADV']):
+        """This function is used to lemmitize the tokenized data
+
+        Args:
+            allowed_postags (list, optional): Allowed postags for lemmitization. Defaults to ['NOUN', 'ADJ', 'VERB', 'ADV'].
+        """
         # Run in terminal: python -m spacy download en
         nlp = spacy.load('en_core_web_sm', disable=['parser', 'ner'])
         texts_out = []
@@ -50,6 +64,8 @@ class LDA():
         self.lemmatized = texts_out
 
     def vectorization(self):
+        """This function is used to vectorize the lemmitized data
+        """
         self.vectorizer = CountVectorizer(analyzer='word',       
                              min_df=10,                        # minimum reqd occurences of a word 
                              stop_words='english',             # remove stop words
@@ -60,10 +76,14 @@ class LDA():
         self.vectorized = self.vectorizer.fit_transform(self.lemmatized)
 
     def computeSparsicity(self):
+        """This function computes the sparsicity
+        """
         data_dense = self.vectorized.todense()
         print("Sparsicity: ", ((data_dense > 0).sum()/data_dense.size)*100, "%")
 
     def buildLDAModel(self): 
+        """This function builds LDA model and calculates its log-likelihood and Perplexity
+        """
         self.lda_model = LatentDirichletAllocation(
                                       n_components=20,               # Number of topics
                                       max_iter=10,               # Max learning iterations
@@ -85,11 +105,15 @@ class LDA():
         print("Perplexity: ", self.lda_model.perplexity(self.vectorized))
         
     def visualizeLDAvis(self):
+        """This function generates the pyLDAvis report and saves it to the output folder
+        """
         panel = pyLDAvis.sklearn.prepare(self.lda_model, self.vectorized, self.vectorizer, mds='tsne')
         pyLDAvis.save_html(panel, os.path.join("../Output/" + f'{self.dirName}/{self.dirName}_lda.html'))
         print('File saved')
          
     def buildImprovisedLDAModel(self): 
+        """This builds the optimized LDA model by using GridSearchCV
+        """
         print('Building improvised model')
         search_params = {'n_components': [10, 15, 20, 25, 30], 'learning_decay': [.5, .7, .9]}
         lda = LatentDirichletAllocation()
@@ -102,15 +126,18 @@ class LDA():
         panel = pyLDAvis.sklearn.prepare(self.best_lda_model, self.vectorized, self.vectorizer, mds='tsne')
         pyLDAvis.save_html(panel, os.path.join("../Output/" + f'{self.dirName}/{self.dirName}_best_lda.html'))
         print('File saved')
-
-    # Hot and cold topic
+ 
     def wordsInTopics(self):
+        """Display first 10 words in each topic
+        """
         print('First 10 words in each topic:')
         featureNames = self.vectorizer.get_feature_names()
         for idx, topic in enumerate(self.best_lda_model.components_):
             print ("Topic ", idx, " ".join(featureNames[i] for i in topic.argsort()[:-10 - 1:-1]))       
     
     def calculateDominantTopic(self):
+        """This function calculates which topic is dominant for each data point/row in the dataframe
+        """
         # Create Document - Topic Matrix
         lda_output = self.best_lda_model.transform(self.vectorized)
         topicnames = ["Topic" + str(i) for i in range(self.best_lda_model.n_components)]
@@ -123,12 +150,19 @@ class LDA():
         print(self.data_frame.head(4))
 
     def getTopicDistribution(self):
+        """This function displays the distribution of data/rows/papers per topic
+        """
         self.df_topic_distribution = self.df_document_topic['dominant_topic'].value_counts().reset_index(name="Num Documents")
         self.df_topic_distribution.columns = ['Topic Num', 'Num Documents']
         print('Topic distribution')
         print(self.df_topic_distribution.sort_values(by=['Topic Num']))
 
     def topKeywordsInEachTopic(self, n_words=20):
+        """This function displays top keywords in each topic
+
+        Args:
+            n_words (int, optional): Number of words you want to display. Defaults to 20.
+        """
         # Show top n keywords for each topic
         keywords = np.array(self.vectorizer.get_feature_names())
         topic_keywords = []
@@ -143,11 +177,18 @@ class LDA():
         print(self.df_topic_keywords)
 
     def printAbstractForTopic(self, topic=0):
+        """This function prints the abstract for the given topic
+
+        Args:
+            topic (int, optional): Topic number for which you want to display the abstract. Defaults to 0.
+        """
         abstract = self.data_frame[self.data_frame.dominant_topic == topic].Abstract
         print(f'Abstract belonging to topic number {topic}')
         print(abstract)
 
     def topCitedTopics(self):
+        """This function calculates the top cited topics according to total cites, topic age, paper count, cite per year and cite per topic
+        """
         cite_sum = []
         topic_age = []
 
@@ -182,6 +223,8 @@ class LDA():
         self.df_topic_keywords[self.df_topic_keywords.Topic == 'Topic '+str(most_popular['Topic Num'].values[0])]
 
     def getTopFive(self):
+        """This function calculates the top five cited topics according to total cites, topic age, paper count, cite per year and cite per topic
+        """
         # Top 5 cited per year
         sorted_cite_per_year = self.df_topic_distribution.sort_values(by='Cite Per Year', ascending=False)
         top_five_topic_numbers = sorted_cite_per_year[:5]
