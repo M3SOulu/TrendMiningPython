@@ -41,10 +41,9 @@ Trend Mining project
 
 - Before you start running files you need to add your project path to `python path` otherwise you will get `ModuleNotFoundError` to add your project to `python path` run the following command in the terminal that you had already opened
 
-> #For Linux 
-  export PYTHONPATH="${PYTHONPATH}:/path/to/your/project/"
-  #For Windows
-  set PYTHONPATH=%PYTHONPATH%;C:\path\to\your\project\
+>**For Linux:** `export PYTHONPATH="${PYTHONPATH}:/path/to/your/project/"`
+  
+>**For Windows:** `set PYTHONPATH=%PYTHONPATH%;C:\path\to\your\project\`
 
 - Once done you will be ready to Mine.
 
