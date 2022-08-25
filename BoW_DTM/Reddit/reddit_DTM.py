@@ -3,7 +3,7 @@ from BoW_DTM.DTM_class import DTM
 
 
 try:
-    reddit_data = pd.read_csv('../../Data/reddit_data.csv')
+    reddit_data = pd.read_csv('../../Data/reddit_data.csv', index_col=0)
 except FileNotFoundError:
     print("FileNotFoundError: File not found. Please make sure you have mined the data first")
 except NameError:

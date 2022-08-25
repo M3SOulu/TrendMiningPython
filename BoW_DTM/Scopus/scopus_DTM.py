@@ -3,7 +3,7 @@ from BoW_DTM.DTM_class import DTM
 
 
 try:
-    scopus_data = pd.read_csv('../../Data/scopus_data.csv')
+    scopus_data = pd.read_csv('../../Data/scopus_data.csv', index_col=0)
 except FileNotFoundError:
     print("FileNotFoundError: File not found. Please make sure you have mined the data first")
 except NameError:

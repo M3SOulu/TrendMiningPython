@@ -133,7 +133,7 @@ def cleanData() -> None:
     In this function data points has been droped where abstract and date is missing 
     """
     spinner = PieSpinner('Cleaning Data ')
-    stack_data = pd.read_csv('../Data/stackoverflow_data.csv')
+    stack_data = pd.read_csv('../Data/stackoverflow_data.csv', index_col=0)
     spinner.next()
     abstract = stack_data.Abstract
     title = stack_data.Title

@@ -2,7 +2,7 @@ import pandas as pd
 from BoW_DTM.DTM_class import DTM
 
 try:
-    stackoverflow_data = pd.read_csv('../../Data/stackoverflow_data.csv')
+    stackoverflow_data = pd.read_csv('../../Data/stackoverflow_data.csv', index_col=0)
 except FileNotFoundError:
     print("FileNotFoundError: File not found. Please make sure you have mined the data first")
 except NameError:

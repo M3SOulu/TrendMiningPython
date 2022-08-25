@@ -71,7 +71,7 @@ def clean() -> None:
         Also it renames few important column names  
     """
     spinner = PieSpinner('Cleaning Data ')
-    scopus_data_subset = pd.read_csv('../Data/scopus_data.csv')
+    scopus_data_subset = pd.read_csv('../Data/scopus_data.csv', index_col=0)
     abstract = scopus_data_subset['description']
     title = scopus_data_subset['title']
     cleaned_abstract = abstract.apply(clean_scopus_data)

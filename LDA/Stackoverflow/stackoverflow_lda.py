@@ -3,7 +3,7 @@ from LDA.LDA import LDA
 
 
 try:
-    stackoverflow_data = pd.read_csv('../../Data/stackoverflow_data.csv')
+    stackoverflow_data = pd.read_csv('../../Data/stackoverflow_data.csv', index_col=0)
 except FileNotFoundError:
     print("FileNotFoundError: File not found. Please make sure you have mined the data first")
 except NameError:
@@ -28,3 +28,7 @@ stackoverflow_lda.topKeywordsInEachTopic()
 stackoverflow_lda.printAbstractForTopic(0)
 stackoverflow_lda.topCitedTopics()
 stackoverflow_lda.getTopFive()
+stackoverflow_lda.hotAndColdTopicByDate()
+stackoverflow_lda.plotTopicTrend()
+stackoverflow_lda.plotHotVsCold()
+stackoverflow_lda.trendAnalysisUsingTheta()

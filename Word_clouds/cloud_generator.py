@@ -36,8 +36,8 @@ class WordCloudGenerator():
         plt.figure(figsize = (20, 20))
         plt.imshow(wordcloud)
         plt.axis("off")
-        plt.show()
         plt.savefig(os.path.join("../Output/" + self.dirName, f"{self.dirName}_word_cloud.png"))
+        plt.show()
 
 
     def date_based_comparasion_cloud(self):
@@ -62,8 +62,8 @@ class WordCloudGenerator():
             except:
                 continue
             
-        plt.show()
         plt.savefig(os.path.join("../Output/" + self.dirName, f"{self.dirName}_comparison_cloud.png"))
-             
+        plt.show()
+
             
                 

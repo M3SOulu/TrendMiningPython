@@ -1,6 +1,11 @@
 import pandas as pd
 from LDA.LDA import LDA
 
+import sys
+import warnings
+
+if not sys.warnoptions:
+    warnings.simplefilter("ignore")
 
 try:
     reddit_data = pd.read_csv('../../Data/reddit_data.csv', index_col=0)
@@ -27,3 +32,7 @@ reddit_lda.topKeywordsInEachTopic()
 reddit_lda.printAbstractForTopic(0)
 reddit_lda.topCitedTopics()
 reddit_lda.getTopFive()
+reddit_lda.hotAndColdTopicByDate()
+reddit_lda.plotTopicTrend()
+reddit_lda.plotHotVsCold()
+reddit_lda.trendAnalysisUsingTheta()

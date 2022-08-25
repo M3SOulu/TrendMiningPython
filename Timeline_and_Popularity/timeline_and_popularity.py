@@ -35,8 +35,8 @@ class TimelineAndPopularity():
         print('Yearly distributions:', year_count)
         sns.lineplot(data=year_count).set(title=f"{self.dirName} yearly popularity")
         plt.xticks(rotation=90)
-        plt.show()
         plt.savefig(os.path.join("../Output/" + self.dirName, f"{self.dirName}_yearly_popularity.png"))
+        plt.show()
         print('Yearly popularity figure saved')
 
     def dailyTrend(self):
@@ -46,8 +46,8 @@ class TimelineAndPopularity():
         days_count =  Counter(days) 
         sns.lineplot(data=days_count).set(title=f"{self.dirName} daily trend")
         plt.xticks(rotation=90)
-        plt.show()
         plt.savefig(os.path.join("../Output/" + self.dirName, f"{self.dirName}_daily_trend.png"))
+        plt.show()
         print('Daily trend Figure saved')
 
     def citationAnalysis(self):
@@ -55,8 +55,8 @@ class TimelineAndPopularity():
         """
         citations = self.data_frame['Cites']
         sns.boxplot(citations, orient='h').set(title=f"{self.dirName} citation boxPlot")
-        plt.show()
         plt.savefig(os.path.join("../Output/" + self.dirName, f"{self.dirName}_citation_boxPlot.png"))
+        plt.show()
         print('Citation boxplot figure saved')
     
     def citationSummary(self):
@@ -71,8 +71,8 @@ class TimelineAndPopularity():
         """
         citations = self.data_frame['Cites']
         sns.violinplot(x=citations).set(title=f"{self.dirName} citation violinPlot")
-        plt.show()
         plt.savefig(os.path.join("../Output/" + self.dirName, f"{self.dirName}_citation_violinPlot.png"))
+        plt.show()
         print('Citation violinplot figure saved')
     
     def plotOldvsNewCitations(self):
@@ -89,7 +89,6 @@ class TimelineAndPopularity():
         axes[0].set_title("Old Data")
         sns.boxplot(new_data['Cites'],  ax=axes[1])
         axes[1].set_title("New Data")
-        # plt.show()
         plt.savefig(os.path.join("../Output/" + self.dirName, f"{self.dirName}_oldVSnew_boxPlot.png"))
         print('Old vs new boxplot figure saved')
 
@@ -99,8 +98,8 @@ class TimelineAndPopularity():
         axes[0].set_title("Old Data")
         sns.violinplot(new_data['Cites'],  ax=axes[1])
         axes[1].set_title("New Data")
-        plt.show()
         plt.savefig(os.path.join("../Output/" + self.dirName, f"{self.dirName}_oldVSnew_violinPlot.png"))
+        plt.show()
         print('Old vs new violinplot figure saved')
 
 
@@ -127,7 +126,6 @@ class TimelineAndPopularity():
         axes[0].set_title("Longer Data")
         sns.boxplot(shorter_length_data['Cites'],  ax=axes[1])
         axes[1].set_title("Shorter Data")
-        # plt.show()
         plt.savefig(os.path.join("../Output/" + self.dirName, f"{self.dirName}_titleLength_boxPlot.png"))
         print('Title length boxplot figure saved')
         
@@ -138,8 +136,8 @@ class TimelineAndPopularity():
         axes[0].set_title("Longer Data")
         sns.violinplot(shorter_length_data['Cites'],  ax=axes[1])
         axes[1].set_title("Shorter Data")
-        plt.show()
         plt.savefig(os.path.join("../Output/" + self.dirName, f"{self.dirName}_titleLength_violinPlot.png"))
+        plt.show()
         print('Title length violinplot figure saved')
 
         # Summary of old and new
@@ -180,8 +178,8 @@ class TimelineAndPopularity():
         axes[2].set_title("Q3 Data")
         sns.boxplot(q4['Cites'],  ax=axes[3])
         axes[3].set_title("Q4 Data")
-        plt.show()
         plt.savefig(os.path.join("../Output/" + self.dirName, f"{self.dirName}_FourwaySplit_boxPlot.png"))
+        plt.show()
         print('Four way figure saved')
         
         #Summary of data

@@ -74,7 +74,7 @@ def clean_reddit_data() -> None:
         Also it drops the row if it has no date and if its abstract is missing
     """
     spinner = PieSpinner('Cleaning Data ') 
-    reddit_data = pd.read_csv('../Data/reddit_data.csv')
+    reddit_data = pd.read_csv('../Data/reddit_data.csv', index_col=0)
     reddit_data['Title_clean'] = reddit_data['Title'].apply(clean_data)
     spinner.next()
     abstract = reddit_data.Abstract
