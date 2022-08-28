@@ -1,6 +1,5 @@
 import re
 import os
-from turtle import pos
 import praw  
 import pandas as pd
 from datetime import datetime   
@@ -20,7 +19,7 @@ reddit_user_agent: Optional[str] = os.getenv('REDDIT_USER_AGENT')
 
 
 
-def clean_data(data: str) -> str:
+def cleaner(data: str) -> str:
     """This function is applied to the dataframe, it removes the unnecessary characters  and symbols from it
 
     Args:
@@ -75,10 +74,10 @@ def clean_reddit_data() -> None:
     """
     spinner = PieSpinner('Cleaning Data ') 
     reddit_data = pd.read_csv('../Data/reddit_data.csv', index_col=0)
-    reddit_data['Title_clean'] = reddit_data['Title'].apply(clean_data)
+    reddit_data['Title_clean'] = reddit_data['Title'].apply(cleaner)
     spinner.next()
     abstract = reddit_data.Abstract
-    cleaned_abstract = abstract.apply(clean_data)
+    cleaned_abstract = abstract.apply(cleaner)
     reddit_data['Abstract_clean'] = cleaned_abstract
     # Drop the rows which have empty abstract
     reddit_data.drop(reddit_data[reddit_data['Abstract'] == ''].index, inplace=True)

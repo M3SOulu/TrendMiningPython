@@ -3,3 +3,4 @@
 ./Data
 **/.mypy_cache/
 **/Output/
+**/.ipynb_checkpoints/
