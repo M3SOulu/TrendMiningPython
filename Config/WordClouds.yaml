@@ -1,0 +1,3 @@
+MAX_WORDS: 50
+SCALE: 2
+COLUMN_FOR_WORD_CLOUD: 'Abstrat_without_stopwords'
