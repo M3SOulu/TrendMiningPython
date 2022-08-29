@@ -173,8 +173,7 @@ class DTM():
     stem_data = data_frame.apply(lambda row : ' '.join(row[column_name]), axis=1)
     stem_data  = stem_data.tolist()
     X = vec.fit_transform(stem_data)
-    # self.vec_df = pd.DataFrame(X.toarray(), columns = vec.get_feature_names())
-    self.vec_df = pd.DataFrame(X.toarray(), columns = vec.get_feature_names_out())
+    self.vec_df = pd.DataFrame(X.toarray(), columns = vec.get_feature_names())
 
 
   def frequent_terms(self): 

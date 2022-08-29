@@ -1,0 +1,13 @@
+# Common
+COLUMN_TO_TOKENIZE: 'Tokenized_data'
+TOP_WORDS_MAX_FREQUENCY: 100
+
+# Reddit
+REDDIT_STOPWORDS: ["new", "custom", "words", "add","to","list", "d", "p", "like", "would"]
+
+# Stackoverflow
+STACKOVERFLOW_STOPWORDS: ["new", "custom", "words", "add","to","list"]
+
+
+# Scopus
+SCOPUS_STOPWORDS: ["new", "custom", "words", "add","to","list", "d", "p", ]

@@ -1,5 +1,6 @@
 # Common 
 STORAGE_PATH: 'Data'
+OUTPUT_PATH: 'Outputs'
 
 # Reddit
 REDDIT_CLIENT_ID: "DiFMh8pzY-38oWqekAZySg"
