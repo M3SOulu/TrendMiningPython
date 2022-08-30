@@ -1,0 +1,16 @@
+ALLOWED_POSTAGS: ['NOUN', 'ADJ', 'VERB', 'ADV']
+ABASTRACT_FOR_TOPIC_NUMBER: 0
+MODEL_HYPER_PARAMETERS: {
+   n_components: 20,               # Number of topics
+   max_iter: 10,                   # Max learning iterations
+   learning_method: 'online',   
+   random_state: 100,              # Random state
+   batch_size: 128,                # n docs in each learning iter
+   evaluate_every: -1,             # compute perplexity every n iters, default: Don't
+   n_jobs: -1,                     # Use all available CPUs
+   doc_topic_prior: 0.1,
+   learning_decay: 0.7,
+   topic_word_prior: 0.1,
+}
+SEARCH_PARAMS:  {'n_components': [10, 15, 20, 25, 30], 'learning_decay': [.5, .7, .9]}
+YEAR: 2022
