@@ -3,19 +3,19 @@ STORAGE_PATH: 'Data'
 OUTPUT_PATH: 'Outputs'
 
 # Reddit
-REDDIT_CLIENT_ID: "DiFMh8pzY-38oWqekAZySg"
-REDDIT_CLIENT_SECRET: "aTj28XkqEqB6eu7a3z4zjeDgHXBoCQ"
-REDDIT_USER_AGENT: "tredMining"
+REDDIT_CLIENT_ID: ""
+REDDIT_CLIENT_SECRET: ""
+REDDIT_USER_AGENT: ""
 REDDIT_SUBREDDIT: 'softwaredevelopment'
 REDDIT_DATA_CSV: "reddit_data.csv"
 
 # Stackoverflow
-STACKOVERFLOW_API_KEY: "9raZ36FkYGFHDSNrW)gdsw(("
+STACKOVERFLOW_API_KEY: ""
 STACKOVERFLOW_DATA_CSV : 'stackoverflow_data.csv' 
 STACKOVERFLOW_QUERY_STRING: 'Software development'
 
 # Scopus
-SCOPUS_API_KEY: "9d8cf209ec6c67867bc44a5247ad0e52"
+SCOPUS_API_KEY: ""
 SCOPUS_DATA_CSV: 'scopus_data.csv'
 SCOPUS_QUERY_STRING_1: 'Software development'
 SCOPUS_QUERY_STRING_2: 'Javascript'
